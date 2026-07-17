@@ -5,7 +5,8 @@ import {
   Code2, Cpu, Database, Wrench, GraduationCap, Award, Trophy,
   Sparkles, QrCode, Rocket, BookOpen, Terminal, Layers,
 } from "lucide-react";
-import profileImg from "@/assets/profile.jpg";
+import profileImg from "@/assets/profile.png.asset.json";
+const profileUrl = profileImg.url;
 import resumeAsset from "@/assets/resume.asset.json";
 
 export const Route = createFileRoute("/")({
@@ -259,7 +260,7 @@ function Hero({ typed }: { typed: string }) {
           <div className="absolute -inset-6 rounded-full bg-gradient-to-br from-sky-400/30 to-transparent blur-2xl" aria-hidden />
           <div className="glass glow-ring float-slow relative overflow-hidden rounded-full p-2">
             <img
-              src={profileImg}
+              src={profileUrl}
               alt="Gowtham V portrait"
               width={512}
               height={512}
