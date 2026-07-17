@@ -6,6 +6,7 @@ import {
   Sparkles, QrCode, Rocket, BookOpen, Terminal, Layers,
 } from "lucide-react";
 import profileImg from "@/assets/profile.png.asset.json";
+const profileUrl = profileImg.url;
 import resumeAsset from "@/assets/resume.asset.json";
 
 export const Route = createFileRoute("/")({
