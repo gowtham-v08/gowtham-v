@@ -5,7 +5,7 @@ import {
   Code2, Cpu, Database, Wrench, GraduationCap, Award, Trophy,
   Sparkles, QrCode, Rocket, BookOpen, Terminal, Layers,
 } from "lucide-react";
-import profileImg from "@/assets/profile.jpg";
+import profileImg from "@/assets/profile.png.asset.json";
 import resumeAsset from "@/assets/resume.asset.json";
 
 export const Route = createFileRoute("/")({
