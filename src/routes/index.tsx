@@ -256,17 +256,17 @@ function Hero({ typed }: { typed: string }) {
         </div>
 
         <div className="relative mx-auto md:ml-auto">
-          <div className="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-sky-400/30 to-transparent blur-2xl" aria-hidden />
-          <div className="glass glow-ring float-slow relative overflow-hidden rounded-[2rem] p-2">
+          <div className="absolute -inset-6 rounded-full bg-gradient-to-br from-sky-400/30 to-transparent blur-2xl" aria-hidden />
+          <div className="glass glow-ring float-slow relative overflow-hidden rounded-full p-2">
             <img
               src={profileImg}
               alt="Gowtham V portrait"
               width={512}
               height={512}
-              className="h-72 w-72 rounded-[1.6rem] object-cover sm:h-80 sm:w-80"
+              className="h-72 w-72 rounded-full object-cover object-center sm:h-80 sm:w-80"
             />
           </div>
-          <div className="glass absolute -bottom-4 -left-4 rounded-2xl px-3 py-2 text-xs">
+          <div className="glass absolute bottom-2 left-0 rounded-full px-3 py-2 text-xs">
             <span className="text-sky-300">●</span> Chennai, India
           </div>
         </div>
