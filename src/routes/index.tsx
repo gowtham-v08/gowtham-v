@@ -494,107 +494,227 @@ function Skills() {
   );
 }
 
+type Project = {
+  title: string;
+  initials: string;
+  gradient: string;
+  featured?: boolean;
+  status: "Completed" | "In Progress";
+  desc: string;
+  tech: string[];
+  features: string[];
+  github?: string;
+  demo?: string;
+  icon: React.ReactNode;
+};
+
+const TECH_COLORS: Record<string, string> = {
+  Python: "bg-sky-400/15 text-sky-300 border-sky-400/30",
+  Java: "bg-orange-400/15 text-orange-300 border-orange-400/30",
+  "C++": "bg-indigo-400/15 text-indigo-300 border-indigo-400/30",
+  "Android (Java)": "bg-emerald-400/15 text-emerald-300 border-emerald-400/30",
+  Android: "bg-emerald-400/15 text-emerald-300 border-emerald-400/30",
+  SQLite: "bg-cyan-400/15 text-cyan-300 border-cyan-400/30",
+  "QR Code API": "bg-fuchsia-400/15 text-fuchsia-300 border-fuchsia-400/30",
+  REST: "bg-rose-400/15 text-rose-300 border-rose-400/30",
+  OOP: "bg-violet-400/15 text-violet-300 border-violet-400/30",
+  "File Handling": "bg-amber-400/15 text-amber-300 border-amber-400/30",
+  Pandas: "bg-purple-400/15 text-purple-300 border-purple-400/30",
+  NumPy: "bg-blue-400/15 text-blue-300 border-blue-400/30",
+  DSA: "bg-teal-400/15 text-teal-300 border-teal-400/30",
+};
+
+function techClass(t: string) {
+  return TECH_COLORS[t] ?? "bg-white/5 text-slate-200 border-white/10";
+}
+
 function Projects() {
-  const main = {
-    title: "Smart QR Attendance System",
-    tag: "Featured Project",
-    desc: "A modern attendance platform that replaces paper roll calls with dynamic QR codes. Students scan a session-specific code from their phones, and attendance syncs instantly to a secure dashboard.",
-    tech: ["Python", "Android (Java)", "SQLite", "QR Code API", "REST"],
-    features: [
-      "Dynamic, time-bound QR codes to prevent proxy attendance",
-      "Instant marking via mobile camera scan",
-      "Admin dashboard with per-class analytics",
-      "Offline capture with automatic sync on reconnect",
-    ],
-    challenges:
-      "Designing tamper-resistant, short-lived QR tokens and reconciling offline scans without duplicates.",
-    learned:
-      "Cross-platform data flow between Android and a Python backend, session-based auth, and clean separation between UI, service and data layers.",
-  };
-  const others = [
+  const projects: Project[] = [
+    {
+      title: "Smart QR Attendance System",
+      initials: "QR",
+      gradient: "from-sky-500 via-cyan-500 to-blue-600",
+      featured: true,
+      status: "In Progress",
+      desc: "A modern attendance platform that replaces paper roll calls with dynamic QR codes. Students scan a session-specific code from their phones and attendance syncs instantly to a secure dashboard.",
+      tech: ["Python", "Android (Java)", "SQLite", "QR Code API", "REST"],
+      features: [
+        "Dynamic, time-bound QR codes that prevent proxy attendance",
+        "Instant marking via mobile camera scan",
+        "Admin dashboard with per-class analytics",
+        "Offline capture with automatic sync on reconnect",
+        "Session-based authentication for staff & students",
+      ],
+      github: "https://github.com/GowthamV",
+      icon: <QrCode className="h-14 w-14" />,
+    },
     {
       title: "Student Record Management System",
-      desc: "Console-based CRUD system in Python with persistent file storage, modular OOP design, and fast search/update.",
+      initials: "SR",
+      gradient: "from-violet-500 via-indigo-500 to-sky-500",
+      status: "Completed",
+      desc: "A console-based CRUD system in Python with persistent file storage, modular OOP design, and fast search & update operations.",
       tech: ["Python", "OOP", "File Handling"],
+      features: [
+        "Create, read, update and delete student records",
+        "Persistent file I/O — no data loss between sessions",
+        "Modular OOP architecture for reusability",
+        "Instant search and update by roll number",
+      ],
+      github: "https://github.com/GowthamV",
+      icon: <Terminal className="h-14 w-14" />,
     },
     {
       title: "Data Science Sandbox",
-      desc: "NPTEL-driven notebooks exploring Pandas, NumPy, and matplotlib workflows for real datasets.",
+      initials: "DS",
+      gradient: "from-emerald-500 via-teal-500 to-cyan-500",
+      status: "In Progress",
+      desc: "NPTEL-driven notebooks exploring Pandas, NumPy and matplotlib workflows on real-world datasets for hands-on data analysis practice.",
       tech: ["Python", "Pandas", "NumPy"],
+      features: [
+        "Guided exercises from NPTEL Data Science with Python",
+        "Data cleaning, wrangling and visualization",
+        "Exploratory analysis on public datasets",
+        "Reusable notebook templates",
+      ],
+      github: "https://github.com/GowthamV",
+      icon: <Database className="h-14 w-14" />,
     },
     {
       title: "DSA Practice Playground",
-      desc: "Curated set of C++ solutions to classic Data Structures & Algorithms problems, focused on clarity.",
+      initials: "DSA",
+      gradient: "from-fuchsia-500 via-rose-500 to-orange-500",
+      status: "In Progress",
+      desc: "A curated set of C++ solutions to classic Data Structures & Algorithms problems, focused on clean, readable, well-commented code.",
       tech: ["C++", "DSA"],
+      features: [
+        "Organized by topic — arrays, trees, graphs, DP",
+        "Clean, well-commented reference implementations",
+        "Time and space complexity notes",
+        "Continuously growing problem set",
+      ],
+      github: "https://github.com/GowthamV",
+      icon: <Code2 className="h-14 w-14" />,
     },
   ];
+
   return (
     <Section id="projects">
-      <SectionHeader eyebrow="Projects" title="Selected work" desc="A mix of course, competition and self-driven builds." />
+      <SectionHeader
+        eyebrow="Portfolio"
+        title="Featured Projects"
+        desc="A collection of projects showcasing my skills in AI, Machine Learning, Web Development, and Software Engineering."
+      />
 
-      <div className="glass glass-hover rounded-3xl p-6 sm:p-8" data-reveal>
-        <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr]">
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-400/10 px-3 py-1 text-xs text-sky-300">
-              <Sparkles className="h-3.5 w-3.5" /> {main.tag}
-            </div>
-            <h3 className="mt-4 font-display text-2xl font-bold sm:text-3xl">{main.title}</h3>
-            <p className="mt-3 text-slate-300">{main.desc}</p>
-
-            <div className="mt-5 flex flex-wrap gap-2">
-              {main.tech.map((t) => (
-                <span key={t} className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-200">{t}</span>
-              ))}
-            </div>
-
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              <InfoBlock icon={<Trophy className="h-4 w-4" />} title="Challenges">
-                {main.challenges}
-              </InfoBlock>
-              <InfoBlock icon={<BookOpen className="h-4 w-4" />} title="What I learned">
-                {main.learned}
-              </InfoBlock>
-            </div>
-          </div>
-
-          <div className="relative">
-            <div className="glass glow-ring aspect-square w-full rounded-3xl p-6">
-              <div className="grid h-full place-items-center rounded-2xl bg-gradient-to-br from-sky-400/10 to-transparent">
-                <QrCode className="h-32 w-32 text-sky-300 drop-shadow-[0_0_20px_rgba(56,189,248,0.6)]" />
-              </div>
-            </div>
-            <div className="mt-4 space-y-2">
-              <div className="text-xs uppercase tracking-widest text-slate-400">Key features</div>
-              <ul className="space-y-2 text-sm text-slate-200">
-                {main.features.map((f) => (
-                  <li key={f} className="flex gap-2"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-400" />{f}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-8 grid gap-6 md:grid-cols-3">
-        {others.map((p) => (
-          <div key={p.title} className="glass glass-hover rounded-3xl p-6" data-reveal>
-            <div className="flex items-center justify-between">
-              <div className="grid h-11 w-11 place-items-center rounded-xl bg-sky-400/15 text-sky-300"><Terminal className="h-5 w-5" /></div>
-              <ExternalLink className="h-4 w-4 text-slate-500" />
-            </div>
-            <h4 className="mt-4 font-display font-semibold">{p.title}</h4>
-            <p className="mt-2 text-sm text-slate-300">{p.desc}</p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {p.tech.map((t) => (
-                <span key={t} className="rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] text-slate-300">{t}</span>
-              ))}
-            </div>
-          </div>
+      <div className="grid gap-6 md:grid-cols-2" data-reveal>
+        {projects.map((p) => (
+          <ProjectCard key={p.title} project={p} />
         ))}
       </div>
     </Section>
   );
 }
+
+function ProjectCard({ project: p }: { project: Project }) {
+  const isCompleted = p.status === "Completed";
+  return (
+    <article
+      className={`glass group relative flex flex-col overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-1.5 hover:border-sky-400/50 hover:shadow-[0_25px_80px_-20px_rgba(56,189,248,0.45)] ${
+        p.featured ? "md:col-span-2" : ""
+      }`}
+    >
+      {/* Banner */}
+      <div className={`relative h-40 overflow-hidden bg-gradient-to-br ${p.gradient} sm:h-48`}>
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 20% 30%, rgba(255,255,255,0.35) 0, transparent 40%), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.2) 0, transparent 45%)",
+          }}
+          aria-hidden
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_50%,rgba(15,23,42,0.75)_100%)]" aria-hidden />
+
+        <div className="absolute left-5 top-5 grid h-14 w-14 place-items-center rounded-2xl bg-white/15 font-display text-lg font-bold text-white backdrop-blur-md ring-1 ring-white/25">
+          {p.initials}
+        </div>
+
+        {p.featured && (
+          <div className="absolute right-5 top-5 inline-flex items-center gap-1.5 rounded-full bg-slate-900/60 px-3 py-1 text-[11px] font-semibold text-sky-300 ring-1 ring-sky-400/40 backdrop-blur-md">
+            <Sparkles className="h-3 w-3" /> Featured
+          </div>
+        )}
+
+        <div className="absolute bottom-4 right-5 text-white/85 transition-transform duration-500 group-hover:scale-110">
+          {p.icon}
+        </div>
+      </div>
+
+      {/* Body */}
+      <div className="flex flex-1 flex-col gap-4 p-6">
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="font-display text-xl font-bold text-slate-50 sm:text-2xl">{p.title}</h3>
+          <span
+            className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-medium ${
+              isCompleted
+                ? "border-emerald-400/40 bg-emerald-400/10 text-emerald-300"
+                : "border-amber-400/40 bg-amber-400/10 text-amber-300"
+            }`}
+          >
+            <span className={`h-1.5 w-1.5 rounded-full ${isCompleted ? "bg-emerald-400" : "bg-amber-400 animate-pulse"}`} />
+            {p.status}
+          </span>
+        </div>
+
+        <p className="text-sm leading-relaxed text-slate-300">{p.desc}</p>
+
+        <div className="flex flex-wrap gap-1.5">
+          {p.tech.map((t) => (
+            <span key={t} className={`rounded-full border px-2.5 py-0.5 text-[11px] font-medium ${techClass(t)}`}>
+              {t}
+            </span>
+          ))}
+        </div>
+
+        <div>
+          <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400">Key features</div>
+          <ul className="space-y-1.5 text-sm text-slate-200">
+            {p.features.slice(0, 5).map((f) => (
+              <li key={f} className="flex gap-2">
+                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-400" />
+                <span>{f}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="mt-auto flex flex-wrap gap-2 pt-2">
+          {p.github && (
+            <a
+              href={p.github}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-slate-100 transition-colors hover:border-sky-400/50 hover:bg-sky-400/10 hover:text-sky-300"
+            >
+              <Github className="h-4 w-4" /> GitHub
+            </a>
+          )}
+          {p.demo && (
+            <a
+              href={p.demo}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-sky-400 px-4 py-2 text-sm font-semibold text-slate-900 transition-transform hover:scale-105"
+            >
+              <ExternalLink className="h-4 w-4" /> Live Demo
+            </a>
+          )}
+        </div>
+      </div>
+    </article>
+  );
+}
+
 
 function InfoBlock({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
   return (
