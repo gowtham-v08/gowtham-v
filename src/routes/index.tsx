@@ -1,13 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  Download, Mail, Linkedin, Github, ArrowUp,
-  Code2, GraduationCap, Award, BookOpen, Layers,
+  Download, Mail, Github, ArrowUp, GraduationCap, Layers,
 } from "lucide-react";
 import profileImg from "@/assets/profile.png.asset.json";
 const profileUrl = profileImg.url;
 import resumeAsset from "@/assets/resume.asset.json";
-import { ContainerScroll } from "@/components/ui/container-scroll-animation";
+import { motion } from "framer-motion";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -69,7 +68,7 @@ function Portfolio() {
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 20);
-      setShowTop(window.scrollY > 600);
+      setShowTop(window.scrollY > 500);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -108,8 +107,8 @@ function Nav({ active, scrolled }: { active: string; scrolled: boolean }) {
   const [open, setOpen] = useState(false);
   return (
     <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "py-2" : "py-4"}`}>
-      <div className="mx-auto max-w-6xl px-4">
-        <div className={`glass flex items-center justify-between rounded-2xl px-4 py-3 ${scrolled ? "glow-ring" : ""}`}>
+      <div className="mx-auto max-w-5xl px-4">
+        <div className={`glass flex items-center justify-between rounded-2xl px-4 py-2.5 ${scrolled ? "glow-ring" : ""}`}>
           <a href="#home" className="font-display text-lg font-bold tracking-tight">
             <span className="text-gradient">Gowtham.V</span>
           </a>
@@ -166,38 +165,71 @@ function Nav({ active, scrolled }: { active: string; scrolled: boolean }) {
 
 function Hero() {
   return (
-    <section id="home" className="relative pt-20">
-      <ContainerScroll
-        titleComponent={
-          <>
-            <h1 className="text-4xl md:text-5xl font-semibold text-white">
-              Gowtham V
-            </h1>
-            <p className="mt-3 text-lg md:text-xl text-slate-300">
-              B.E. CSE (AI & ML) — 2nd Year
-            </p>
-            <p className="mt-2 text-base text-slate-400 max-w-xl mx-auto">
-              Jeppiaar Engineering College · Chennai
-            </p>
-          </>
-        }
-      >
-        <img
-          src={profileUrl}
-          alt="Gowtham V"
-          height={720}
-          width={1400}
-          className="mx-auto rounded-2xl object-cover h-full object-top"
-          draggable={false}
-        />
-      </ContainerScroll>
+    <section id="home" className="relative flex min-h-[90vh] items-center px-4 pt-28 pb-16">
+      <div className="mx-auto grid w-full max-w-5xl grid-cols-1 items-center gap-10 md:grid-cols-[1.1fr_0.9fr]">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h1 className="font-display text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl">
+            Gowtham V
+          </h1>
+          <p className="mt-3 text-lg text-slate-300">
+            B.E. CSE (AI & ML) · 2nd Year
+          </p>
+          <p className="mt-1 text-base text-slate-400">
+            Jeppiaar Engineering College · Chennai
+          </p>
+          <p className="mt-6 max-w-md text-slate-300/90 leading-relaxed">
+            Writing code in Python, Java and C++. Currently learning data science through NPTEL.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a
+              href={resumeAsset.url}
+              download="Gowtham_V_Resume.pdf"
+              className="inline-flex items-center gap-2 rounded-full bg-sky-400 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-[0_10px_40px_-10px_rgba(56,189,248,0.6)] transition-transform hover:scale-105"
+            >
+              <Download className="h-4 w-4" /> Resume
+            </a>
+            <a
+              href="#contact"
+              className="glass glass-hover inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-sky-300"
+            >
+              <Mail className="h-4 w-4" /> Contact
+            </a>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.15 }}
+          className="relative mx-auto"
+        >
+          <div className="absolute -inset-4 rounded-full bg-sky-400/20 blur-2xl" aria-hidden />
+          <div className="glass glow-ring relative overflow-hidden rounded-full p-1.5">
+            <img
+              src={profileUrl}
+              alt="Gowtham V"
+              width={400}
+              height={400}
+              className="h-64 w-64 rounded-full object-cover object-center sm:h-72 sm:w-72 md:h-80 md:w-80"
+              onError={(e) => {
+                // fallback if Lovable asset fails
+                (e.target as HTMLImageElement).src = "https://avatars.githubusercontent.com/u/306114697?v=4";
+              }}
+            />
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 }
 
 function SectionHeader({ title }: { title: string }) {
   return (
-    <div className="mx-auto mb-10 max-w-2xl text-center" data-reveal>
+    <div className="mx-auto mb-8 max-w-2xl text-center" data-reveal>
       <h2 className="font-display text-2xl font-bold sm:text-3xl">{title}</h2>
     </div>
   );
@@ -205,8 +237,8 @@ function SectionHeader({ title }: { title: string }) {
 
 function Section({ id, children }: { id: string; children: React.ReactNode }) {
   return (
-    <section id={id} className="scroll-mt-24 px-4 py-20">
-      <div className="mx-auto max-w-6xl">{children}</div>
+    <section id={id} className="scroll-mt-24 px-4 py-16">
+      <div className="mx-auto max-w-5xl">{children}</div>
     </section>
   );
 }
@@ -215,7 +247,7 @@ function About() {
   return (
     <Section id="about">
       <SectionHeader title="About" />
-      <div className="max-w-3xl mx-auto" data-reveal>
+      <div className="max-w-2xl mx-auto" data-reveal>
         <div className="glass rounded-3xl p-6 md:p-8">
           <p className="text-slate-200/90 leading-relaxed">
             2nd year B.E. Computer Science and Engineering (AI & ML) student at
@@ -250,7 +282,7 @@ function Education() {
   return (
     <Section id="education">
       <SectionHeader title="Education" />
-      <div className="max-w-2xl mx-auto space-y-4" data-reveal>
+      <div className="max-w-xl mx-auto space-y-3" data-reveal>
         {items.map((it) => (
           <div key={it.title} className="glass rounded-2xl p-5 flex items-start gap-4">
             <GraduationCap className="h-5 w-5 text-sky-300 mt-0.5 shrink-0" />
@@ -267,19 +299,11 @@ function Education() {
 }
 
 function Skills() {
-  const items = [
-    "Python",
-    "Java",
-    "C++",
-    "Git",
-    "Data Structures",
-    "OOP",
-    "Basic ML",
-  ];
+  const items = ["Python", "Java", "C++", "Git", "Data Structures", "OOP", "Basic ML"];
   return (
     <Section id="skills">
       <SectionHeader title="Skills" />
-      <div className="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto" data-reveal>
+      <div className="flex flex-wrap justify-center gap-2.5 max-w-lg mx-auto" data-reveal>
         {items.map((s) => (
           <span
             key={s}
@@ -309,9 +333,9 @@ function Projects() {
   return (
     <Section id="projects">
       <SectionHeader title="Projects" />
-      <div className="grid gap-4 md:grid-cols-2 max-w-3xl mx-auto" data-reveal>
+      <div className="grid gap-4 md:grid-cols-2 max-w-2xl mx-auto" data-reveal>
         {projects.map((p) => (
-          <div key={p.title} className="glass rounded-2xl p-5">
+          <div key={p.title} className="glass glass-hover rounded-2xl p-5">
             <h3 className="font-semibold">{p.title}</h3>
             <p className="mt-1 text-sm text-slate-300">{p.desc}</p>
             <div className="mt-3 flex flex-wrap gap-2">
@@ -330,7 +354,7 @@ function Contact() {
   return (
     <Section id="contact">
       <SectionHeader title="Contact" />
-      <div className="flex flex-wrap justify-center gap-4 max-w-xl mx-auto" data-reveal>
+      <div className="flex flex-wrap justify-center gap-3 max-w-md mx-auto" data-reveal>
         <a
           href="mailto:gowtham_dev@outlook.com"
           className="glass glass-hover rounded-2xl px-5 py-3 flex items-center gap-3 text-sm"
