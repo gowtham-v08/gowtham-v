@@ -4,7 +4,8 @@ import {
   Download, Mail, Github, ArrowUp, GraduationCap, Layers,
 } from "lucide-react";
 import resumeAsset from "@/assets/resume.asset.json";
-import { motion } from "framer-motion";
+import { ContainerScroll } from "@/components/ui/container-scroll-animation";
+import { PROFILE_IMAGE } from "@/lib/profile-image";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -66,7 +67,7 @@ function Portfolio() {
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 20);
-      setShowTop(window.scrollY > 500);
+      setShowTop(window.scrollY > 600);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -163,54 +164,29 @@ function Nav({ active, scrolled }: { active: string; scrolled: boolean }) {
 
 function Hero() {
   return (
-    <section id="home" className="relative flex min-h-[85vh] items-center px-4 pt-28 pb-12">
-      <div className="mx-auto grid w-full max-w-5xl grid-cols-1 items-center gap-12 md:grid-cols-[1.15fr_0.85fr]">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55 }}
-        >
-          <h1 className="font-display text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl md:text-6xl">
-            Gowtham V
-          </h1>
-          <p className="mt-3 text-lg text-slate-300">
-            B.E. CSE (AI & ML) · 2nd Year
-          </p>
-          <p className="mt-1 text-base text-slate-400">
-            Jeppiaar Engineering College · Chennai
-          </p>
-          <p className="mt-6 max-w-md text-slate-300/90 leading-relaxed">
-            Writing code in Python, Java and C++. Currently learning data science through NPTEL.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a
-              href={resumeAsset.url}
-              download="Gowtham_V_Resume.pdf"
-              className="inline-flex items-center gap-2 rounded-full bg-sky-400 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-[0_10px_40px_-10px_rgba(56,189,248,0.6)] transition-transform hover:scale-105"
-            >
-              <Download className="h-4 w-4" /> Resume
-            </a>
-            <a
-              href="#contact"
-              className="glass glass-hover inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-sky-300"
-            >
-              <Mail className="h-4 w-4" /> Contact
-            </a>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.92 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.65, delay: 0.1 }}
-          className="relative mx-auto"
-        >
-          <div className="absolute -inset-6 rounded-full bg-sky-400/15 blur-3xl" aria-hidden />
-          <div className="glass glow-ring relative grid h-64 w-64 place-items-center rounded-full sm:h-72 sm:w-72 md:h-80 md:w-80">
-            <span className="font-display text-6xl font-bold text-sky-300/90 sm:text-7xl">GV</span>
-          </div>
-        </motion.div>
-      </div>
+    <section id="home" className="relative pt-16">
+      <ContainerScroll
+        titleComponent={
+          <>
+            <h1 className="text-3xl md:text-5xl font-semibold text-white">
+              Gowtham V
+            </h1>
+            <p className="mt-3 text-base md:text-lg text-slate-300">
+              B.E. CSE (AI & ML) · 2nd Year
+            </p>
+            <p className="mt-1 text-sm text-slate-400">
+              Jeppiaar Engineering College · Chennai
+            </p>
+          </>
+        }
+      >
+        <img
+          src={PROFILE_IMAGE}
+          alt="Gowtham V"
+          className="mx-auto h-full w-full rounded-2xl object-cover object-top"
+          draggable={false}
+        />
+      </ContainerScroll>
     </section>
   );
 }
