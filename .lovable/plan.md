@@ -1,11 +1,11 @@
-# Portfolio polish with 21st.dev-inspired patterns
+# Portfolio polish inspired by 21st.dev
 
 ## What will change
-- Refine the existing portfolio's visual hierarchy and interaction details using polished React portfolio patterns inspired by 21st.dev.
-- Improve consistency across navigation, section headings, project and content cards, responsive spacing, focus states, and subtle motion.
-- Preserve the current dark navy and sky-blue identity, uploaded portrait and resume, all existing sections, and resume-sourced content.
+- Treat “21st ReactDev” as 21st.dev React component inspiration, not a request to install every community component.
+- Polish the existing portfolio’s navigation, section rhythm, cards, project presentation, responsive details, keyboard access, and motion.
+- Keep all current sections and content, the navy-and-sky visual identity, and the uploaded portrait and resume.
 
 ## Technical details
-- Keep the current TanStack Start page and styling approach; make focused edits to the existing route and global styles.
-- Use existing dependencies and design tokens; do not add a 21st.dev account/API dependency or replace the site's content with template data.
-- Verify the updated page at desktop and mobile sizes and check the preview build.
+- Make focused changes in the current TanStack Start page and global stylesheet, reusing existing libraries and theme tokens.
+- Use CSS and existing React/Lucide patterns rather than adding component packages or external account requirements.
+- Check desktop and mobile appearance and the latest preview build.
