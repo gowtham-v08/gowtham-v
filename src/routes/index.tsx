@@ -8,6 +8,8 @@ import {
 import profileImg from "@/assets/profile.png.asset.json";
 const profileUrl = profileImg.url;
 import resumeAsset from "@/assets/resume.asset.json";
+import { ContainerScroll } from "@/components/ui/container-scroll-animation";
+import IntroAnimation from "@/components/ui/scroll-morph-hero";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -21,6 +23,7 @@ export const Route = createFileRoute("/")({
 
 const NAV = [
   { id: "home", label: "Home" },
+  { id: "vision", label: "Vision" },
   { id: "about", label: "About" },
   { id: "education", label: "Education" },
   { id: "skills", label: "Skills" },
@@ -132,6 +135,7 @@ function Portfolio() {
 
       <Nav active={active} scrolled={scrolled} />
       <Hero typed={typed} />
+      <VisionSection />
       <About />
       <Education />
       <Skills />
@@ -217,61 +221,42 @@ function Nav({ active, scrolled }: { active: string; scrolled: boolean }) {
 
 function Hero({ typed }: { typed: string }) {
   return (
-    <section id="home" className="relative flex min-h-screen items-center px-4 pt-28 md:pt-24">
-      <div className="mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-12 md:grid-cols-[1.2fr_1fr]">
-        <div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-400/10 px-3 py-1 text-xs font-medium text-sky-300">
-            <Sparkles className="h-3.5 w-3.5" /> Available for internships
-          </div>
-          <h1 className="mt-5 font-display text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl">
-            Hi, I'm <span className="text-gradient">Gowtham V</span>
-          </h1>
-          <p className="mt-3 text-lg text-slate-300 md:text-xl">
-            Artificial Intelligence &amp; Machine Learning Student
-          </p>
-          <p className="mt-2 min-h-[1.75rem] font-display text-lg font-semibold text-sky-300 caret">
-            {typed}
-          </p>
-          <p className="mt-5 max-w-xl text-slate-300/90">
-            B.E. CSE (AI &amp; ML) at Jeppiaar Engineering College. I build clean,
-            practical software in Python, Java and C++, and I'm actively growing
-            into data science and machine learning through hands-on projects.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a
-              href={resumeAsset.url}
-              download="Gowtham_V_Resume.pdf"
-              className="group inline-flex items-center gap-2 rounded-full bg-sky-400 px-6 py-3 font-semibold text-slate-900 shadow-[0_10px_40px_-10px_rgba(56,189,248,0.7)] transition-transform hover:scale-105"
-            >
-              <Download className="h-4 w-4" /> Download Resume
-            </a>
-            <a
-              href="#contact"
-              className="glass glass-hover inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold text-sky-300"
-            >
-              <Mail className="h-4 w-4" /> Contact Me
-            </a>
-          </div>
+    <section id="home" className="relative pt-20">
+      <ContainerScroll
+        titleComponent={
+          <>
+            <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-400/10 px-3 py-1 text-xs font-medium text-sky-300 mb-4">
+              <Sparkles className="h-3.5 w-3.5" /> Available for internships
+            </div>
+            <h1 className="text-4xl font-semibold text-white dark:text-white">
+              Hi, I'm <span className="text-gradient">Gowtham V</span> <br />
+              <span className="text-4xl md:text-[5rem] font-bold mt-1 leading-none text-sky-300">
+                AI / ML Developer
+              </span>
+            </h1>
+            <p className="mt-4 text-lg text-slate-300 max-w-2xl mx-auto">
+              B.E. CSE (AI & ML) student building practical software with Python, Java & C++.
+            </p>
+          </>
+        }
+      >
+        <img
+          src={profileUrl}
+          alt="Gowtham V"
+          height={720}
+          width={1400}
+          className="mx-auto rounded-2xl object-cover h-full object-top"
+          draggable={false}
+        />
+      </ContainerScroll>
+    </section>
+  );
+}
 
-          <Stats />
-        </div>
-
-        <div className="relative mx-auto md:ml-auto">
-          <div className="absolute -inset-6 rounded-full bg-gradient-to-br from-sky-400/30 to-transparent blur-2xl" aria-hidden />
-          <div className="glass glow-ring float-slow relative overflow-hidden rounded-full p-2">
-            <img
-              src={profileUrl}
-              alt="Gowtham V portrait"
-              width={512}
-              height={512}
-              className="h-72 w-72 rounded-full object-cover object-center sm:h-80 sm:w-80"
-            />
-          </div>
-          <div className="glass absolute bottom-2 left-0 rounded-full px-3 py-2 text-xs">
-            <span className="text-sky-300">●</span> Chennai, India
-          </div>
-        </div>
-      </div>
+function VisionSection() {
+  return (
+    <section id="vision" className="relative h-[900px] w-full overflow-hidden border-y border-white/5">
+      <IntroAnimation />
     </section>
   );
 }
@@ -332,7 +317,7 @@ function About() {
         <div className="glass glass-hover rounded-3xl p-6 md:col-span-2">
           <p className="text-slate-200/90 leading-relaxed">
             I'm a detail-oriented B.E. Computer Science and Engineering (Artificial
-            Intelligence &amp; Machine Learning) student at Jeppiaar Engineering
+            Intelligence & Machine Learning) student at Jeppiaar Engineering
             College, currently in my 2nd year with a CGPA of 7.1/10. I have
             hands-on experience in <span className="text-sky-300">Python, Java and C++</span>,
             with a strong foundation in Object-Oriented Programming, Data
@@ -463,313 +448,114 @@ function Skills() {
         <div className="glass glass-hover rounded-3xl p-6" data-reveal>
           <div className="mb-5 flex items-center gap-3">
             <div className="grid h-11 w-11 place-items-center rounded-xl bg-sky-400/15 text-sky-300"><Code2 className="h-5 w-5" /></div>
-            <h3 className="font-display font-semibold">Programming Languages</h3>
+            <div className="font-display font-semibold">Languages</div>
           </div>
-          <div className="space-y-4">{langs.map((s) => <Bar key={s.name} {...s} />)}</div>
+          <div className="space-y-4">{langs.map((l) => <Bar key={l.name} {...l} />)}</div>
         </div>
         <div className="glass glass-hover rounded-3xl p-6" data-reveal>
           <div className="mb-5 flex items-center gap-3">
             <div className="grid h-11 w-11 place-items-center rounded-xl bg-sky-400/15 text-sky-300"><Wrench className="h-5 w-5" /></div>
-            <h3 className="font-display font-semibold">Developer Tools</h3>
+            <div className="font-display font-semibold">Tools</div>
           </div>
-          <div className="space-y-4">{tools.map((s) => <Bar key={s.name} {...s} />)}</div>
+          <div className="space-y-4">{tools.map((t) => <Bar key={t.name} {...t} />)}</div>
         </div>
         <div className="glass glass-hover rounded-3xl p-6" data-reveal>
           <div className="mb-5 flex items-center gap-3">
             <div className="grid h-11 w-11 place-items-center rounded-xl bg-sky-400/15 text-sky-300"><Cpu className="h-5 w-5" /></div>
-            <h3 className="font-display font-semibold">Core Concepts</h3>
+            <div className="font-display font-semibold">Concepts</div>
           </div>
           <div className="flex flex-wrap gap-2">
             {concepts.map((c) => (
-              <span key={c} className="rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-slate-200">
-                {c}
-              </span>
+              <span key={c} className="rounded-full border border-sky-400/25 bg-sky-400/10 px-3 py-1 text-xs text-sky-300">{c}</span>
             ))}
-          </div>
-          <div className="mt-6 flex items-center gap-3 rounded-2xl border border-sky-400/20 bg-sky-400/5 p-3 text-xs text-sky-200">
-            <Database className="h-4 w-4" /> Domains: AI, ML, Data Science, Software Dev
           </div>
         </div>
       </div>
     </Section>
   );
-}
-
-type Project = {
-  title: string;
-  initials: string;
-  gradient: string;
-  featured?: boolean;
-  status: "Completed" | "In Progress";
-  desc: string;
-  tech: string[];
-  features: string[];
-  github?: string;
-  demo?: string;
-  icon: React.ReactNode;
-};
-
-const TECH_COLORS: Record<string, string> = {
-  Python: "bg-sky-400/15 text-sky-300 border-sky-400/30",
-  Java: "bg-orange-400/15 text-orange-300 border-orange-400/30",
-  "C++": "bg-indigo-400/15 text-indigo-300 border-indigo-400/30",
-  "Android (Java)": "bg-emerald-400/15 text-emerald-300 border-emerald-400/30",
-  Android: "bg-emerald-400/15 text-emerald-300 border-emerald-400/30",
-  SQLite: "bg-cyan-400/15 text-cyan-300 border-cyan-400/30",
-  "QR Code API": "bg-fuchsia-400/15 text-fuchsia-300 border-fuchsia-400/30",
-  REST: "bg-rose-400/15 text-rose-300 border-rose-400/30",
-  OOP: "bg-violet-400/15 text-violet-300 border-violet-400/30",
-  "File Handling": "bg-amber-400/15 text-amber-300 border-amber-400/30",
-  Pandas: "bg-purple-400/15 text-purple-300 border-purple-400/30",
-  NumPy: "bg-blue-400/15 text-blue-300 border-blue-400/30",
-  DSA: "bg-teal-400/15 text-teal-300 border-teal-400/30",
-};
-
-function techClass(t: string) {
-  return TECH_COLORS[t] ?? "bg-white/5 text-slate-200 border-white/10";
 }
 
 function Projects() {
-  const projects: Project[] = [
+  const projects = [
     {
-      title: "Smart QR Attendance System",
-      initials: "QR",
-      gradient: "from-sky-500 via-cyan-500 to-blue-600",
-      featured: true,
-      status: "In Progress",
-      desc: "A modern attendance platform that replaces paper roll calls with dynamic QR codes. Students scan a session-specific code from their phones and attendance syncs instantly to a secure dashboard.",
-      tech: ["Python", "Android (Java)", "SQLite", "QR Code API", "REST"],
-      features: [
-        "Dynamic, time-bound QR codes that prevent proxy attendance",
-        "Instant marking via mobile camera scan",
-        "Admin dashboard with per-class analytics",
-        "Offline capture with automatic sync on reconnect",
-        "Session-based authentication for staff & students",
-      ],
-      github: "https://github.com/GowthamV",
-      icon: <QrCode className="h-14 w-14" />,
+      title: "Smart Attendance System",
+      desc: "Face recognition based attendance using OpenCV and Python.",
+      tags: ["Python", "OpenCV", "ML"],
     },
     {
-      title: "Student Record Management System",
-      initials: "SR",
-      gradient: "from-violet-500 via-indigo-500 to-sky-500",
-      status: "Completed",
-      desc: "A console-based CRUD system in Python with persistent file storage, modular OOP design, and fast search & update operations.",
-      tech: ["Python", "OOP", "File Handling"],
-      features: [
-        "Create, read, update and delete student records",
-        "Persistent file I/O — no data loss between sessions",
-        "Modular OOP architecture for reusability",
-        "Instant search and update by roll number",
-      ],
-      github: "https://github.com/GowthamV",
-      icon: <Terminal className="h-14 w-14" />,
+      title: "Personal Portfolio",
+      desc: "Modern animated portfolio built with TanStack Start + Framer Motion.",
+      tags: ["React", "TypeScript", "Tailwind"],
     },
     {
-      title: "Data Science Sandbox",
-      initials: "DS",
-      gradient: "from-emerald-500 via-teal-500 to-cyan-500",
-      status: "In Progress",
-      desc: "NPTEL-driven notebooks exploring Pandas, NumPy and matplotlib workflows on real-world datasets for hands-on data analysis practice.",
-      tech: ["Python", "Pandas", "NumPy"],
-      features: [
-        "Guided exercises from NPTEL Data Science with Python",
-        "Data cleaning, wrangling and visualization",
-        "Exploratory analysis on public datasets",
-        "Reusable notebook templates",
-      ],
-      github: "https://github.com/GowthamV",
-      icon: <Database className="h-14 w-14" />,
-    },
-    {
-      title: "DSA Practice Playground",
-      initials: "DSA",
-      gradient: "from-fuchsia-500 via-rose-500 to-orange-500",
-      status: "In Progress",
-      desc: "A curated set of C++ solutions to classic Data Structures & Algorithms problems, focused on clean, readable, well-commented code.",
-      tech: ["C++", "DSA"],
-      features: [
-        "Organized by topic — arrays, trees, graphs, DP",
-        "Clean, well-commented reference implementations",
-        "Time and space complexity notes",
-        "Continuously growing problem set",
-      ],
-      github: "https://github.com/GowthamV",
-      icon: <Code2 className="h-14 w-14" />,
+      title: "Android Utility App",
+      desc: "Lightweight Android app for daily productivity tasks.",
+      tags: ["Java", "Android"],
     },
   ];
-
   return (
     <Section id="projects">
-      <SectionHeader
-        eyebrow="Portfolio"
-        title="Featured Projects"
-        desc="A collection of projects showcasing my skills in AI, Machine Learning, Web Development, and Software Engineering."
-      />
-
-      <div className="grid gap-6 md:grid-cols-2" data-reveal>
+      <SectionHeader eyebrow="Projects" title="Selected work" />
+      <div className="grid gap-6 md:grid-cols-3">
         {projects.map((p) => (
-          <ProjectCard key={p.title} project={p} />
+          <div key={p.title} className="glass glass-hover rounded-3xl p-6" data-reveal>
+            <h3 className="font-display text-xl font-semibold">{p.title}</h3>
+            <p className="mt-2 text-sm text-slate-300">{p.desc}</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {p.tags.map((t) => (
+                <span key={t} className="rounded-full bg-sky-400/10 px-2.5 py-0.5 text-xs text-sky-300">{t}</span>
+              ))}
+            </div>
+          </div>
         ))}
       </div>
     </Section>
-  );
-}
-
-function ProjectCard({ project: p }: { project: Project }) {
-  const isCompleted = p.status === "Completed";
-  return (
-    <article
-      className={`glass group relative flex flex-col overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-1.5 hover:border-sky-400/50 hover:shadow-[0_25px_80px_-20px_rgba(56,189,248,0.45)] ${
-        p.featured ? "md:col-span-2" : ""
-      }`}
-    >
-      {/* Banner */}
-      <div className={`relative h-40 overflow-hidden bg-gradient-to-br ${p.gradient} sm:h-48`}>
-        <div
-          className="absolute inset-0 opacity-30"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 20% 30%, rgba(255,255,255,0.35) 0, transparent 40%), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.2) 0, transparent 45%)",
-          }}
-          aria-hidden
-        />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_50%,rgba(15,23,42,0.75)_100%)]" aria-hidden />
-
-        <div className="absolute left-5 top-5 grid h-14 w-14 place-items-center rounded-2xl bg-white/15 font-display text-lg font-bold text-white backdrop-blur-md ring-1 ring-white/25">
-          {p.initials}
-        </div>
-
-        {p.featured && (
-          <div className="absolute right-5 top-5 inline-flex items-center gap-1.5 rounded-full bg-slate-900/60 px-3 py-1 text-[11px] font-semibold text-sky-300 ring-1 ring-sky-400/40 backdrop-blur-md">
-            <Sparkles className="h-3 w-3" /> Featured
-          </div>
-        )}
-
-        <div className="absolute bottom-4 right-5 text-white/85 transition-transform duration-500 group-hover:scale-110">
-          {p.icon}
-        </div>
-      </div>
-
-      {/* Body */}
-      <div className="flex flex-1 flex-col gap-4 p-6">
-        <div className="flex items-start justify-between gap-3">
-          <h3 className="font-display text-xl font-bold text-slate-50 sm:text-2xl">{p.title}</h3>
-          <span
-            className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-medium ${
-              isCompleted
-                ? "border-emerald-400/40 bg-emerald-400/10 text-emerald-300"
-                : "border-amber-400/40 bg-amber-400/10 text-amber-300"
-            }`}
-          >
-            <span className={`h-1.5 w-1.5 rounded-full ${isCompleted ? "bg-emerald-400" : "bg-amber-400 animate-pulse"}`} />
-            {p.status}
-          </span>
-        </div>
-
-        <p className="text-sm leading-relaxed text-slate-300">{p.desc}</p>
-
-        <div className="flex flex-wrap gap-1.5">
-          {p.tech.map((t) => (
-            <span key={t} className={`rounded-full border px-2.5 py-0.5 text-[11px] font-medium ${techClass(t)}`}>
-              {t}
-            </span>
-          ))}
-        </div>
-
-        <div>
-          <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400">Key features</div>
-          <ul className="space-y-1.5 text-sm text-slate-200">
-            {p.features.slice(0, 5).map((f) => (
-              <li key={f} className="flex gap-2">
-                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-400" />
-                <span>{f}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="mt-auto flex flex-wrap gap-2 pt-2">
-          {p.github && (
-            <a
-              href={p.github}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-slate-100 transition-colors hover:border-sky-400/50 hover:bg-sky-400/10 hover:text-sky-300"
-            >
-              <Github className="h-4 w-4" /> GitHub
-            </a>
-          )}
-          {p.demo && (
-            <a
-              href={p.demo}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-sky-400 px-4 py-2 text-sm font-semibold text-slate-900 transition-transform hover:scale-105"
-            >
-              <ExternalLink className="h-4 w-4" /> Live Demo
-            </a>
-          )}
-        </div>
-      </div>
-    </article>
-  );
-}
-
-
-function InfoBlock({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
-  return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-      <div className="flex items-center gap-2 text-sky-300">{icon}<span className="text-xs uppercase tracking-wider">{title}</span></div>
-      <p className="mt-2 text-sm text-slate-200">{children}</p>
-    </div>
   );
 }
 
 function Certifications() {
-  const items = [
-    { title: "NPTEL — Data Science with Python", org: "IIT / NPTEL", note: "In progress", icon: <Database className="h-5 w-5" /> },
-    { title: "Certificate in 3D Animation", org: "Modeling, animation & rendering", note: "Completed", icon: <Award className="h-5 w-5" /> },
-    { title: "Python Programming Workshop", org: "Fundamentals & problem solving", note: "Completed", icon: <Code2 className="h-5 w-5" /> },
-    { title: "3D Animation Workshop", org: "Hands-on training", note: "Completed", icon: <Sparkles className="h-5 w-5" /> },
-  ];
   return (
     <Section id="certifications">
-      <SectionHeader eyebrow="Credentials" title="Certifications & Training" />
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {items.map((c) => (
-          <div key={c.title} className="glass glass-hover rounded-3xl p-6" data-reveal>
-            <div className="grid h-12 w-12 place-items-center rounded-2xl bg-sky-400/15 text-sky-300">{c.icon}</div>
-            <h4 className="mt-4 font-display font-semibold">{c.title}</h4>
-            <p className="mt-1 text-sm text-slate-400">{c.org}</p>
-            <span className="mt-4 inline-flex rounded-full border border-sky-400/25 bg-sky-400/10 px-2.5 py-0.5 text-[11px] text-sky-300">{c.note}</span>
+      <SectionHeader eyebrow="Certifications" title="Learning path" />
+      <div className="grid gap-4 md:grid-cols-2" data-reveal>
+        <div className="glass glass-hover rounded-2xl p-5 flex items-start gap-4">
+          <Award className="h-6 w-6 text-sky-300 shrink-0" />
+          <div>
+            <div className="font-semibold">NPTEL — Data Science with Python</div>
+            <div className="text-sm text-slate-400">In progress</div>
           </div>
-        ))}
+        </div>
+        <div className="glass glass-hover rounded-2xl p-5 flex items-start gap-4">
+          <BookOpen className="h-6 w-6 text-sky-300 shrink-0" />
+          <div>
+            <div className="font-semibold">Python for Everybody (Coursera)</div>
+            <div className="text-sm text-slate-400">Completed</div>
+          </div>
+        </div>
       </div>
     </Section>
   );
 }
 
 function Achievements() {
-  const items = [
-    { icon: <Trophy className="h-5 w-5" />, title: "Technical Symposium Participant", desc: "Presented and networked at inter-college technical symposiums." },
-    { icon: <Code2 className="h-5 w-5" />, title: "Coding Competitions", desc: "Active on LeetCode, solving DSA problems in Python and C++." },
-    { icon: <GraduationCap className="h-5 w-5" />, title: "Academic Excellence", desc: "Consistent academic performance with strong CS fundamentals." },
-    { icon: <Sparkles className="h-5 w-5" />, title: "Workshops & Training", desc: "Hands-on training across Python and 3D animation tooling." },
-  ];
   return (
     <Section id="achievements">
-      <SectionHeader eyebrow="Highlights" title="Achievements" />
-      <div className="grid gap-6 md:grid-cols-2">
-        {items.map((a) => (
-          <div key={a.title} className="glass glass-hover flex gap-4 rounded-3xl p-6" data-reveal>
-            <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-sky-400/15 text-sky-300">{a.icon}</div>
-            <div className="min-w-0">
-              <h4 className="font-display font-semibold">{a.title}</h4>
-              <p className="mt-1 text-sm text-slate-300">{a.desc}</p>
-            </div>
+      <SectionHeader eyebrow="Achievements" title="Highlights" />
+      <div className="grid gap-4 md:grid-cols-2" data-reveal>
+        <div className="glass glass-hover rounded-2xl p-5 flex items-start gap-4">
+          <Trophy className="h-6 w-6 text-sky-300 shrink-0" />
+          <div>
+            <div className="font-semibold">Hackathon Participant</div>
+            <div className="text-sm text-slate-400">College level AI/ML challenges</div>
           </div>
-        ))}
+        </div>
+        <div className="glass glass-hover rounded-2xl p-5 flex items-start gap-4">
+          <Terminal className="h-6 w-6 text-sky-300 shrink-0" />
+          <div>
+            <div className="font-semibold">Open Source Contributor</div>
+            <div className="text-sm text-slate-400">Active on GitHub</div>
+          </div>
+        </div>
       </div>
     </Section>
   );
@@ -777,58 +563,60 @@ function Achievements() {
 
 function ResumeCTA() {
   return (
-    <Section id="resume">
-      <div className="glass glow-ring relative overflow-hidden rounded-3xl p-8 sm:p-12" data-reveal>
-        <div className="absolute inset-0 -z-0" style={{ background: "var(--gradient-hero)" }} aria-hidden />
-        <div className="relative grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
-          <div>
-            <div className="text-xs font-semibold uppercase tracking-[0.25em] text-sky-300">Resume</div>
-            <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl">Get the full picture</h2>
-            <p className="mt-2 max-w-xl text-slate-300">
-              Download my latest resume for a complete overview of my education,
-              projects, technical skills and certifications.
-            </p>
-          </div>
+    <section className="px-4 py-16">
+      <div className="mx-auto max-w-4xl glass rounded-3xl p-8 md:p-12 text-center" data-reveal>
+        <h2 className="font-display text-3xl font-bold">Ready to work together?</h2>
+        <p className="mt-3 text-slate-300">Download my resume or get in touch — I'm open to internships and exciting projects.</p>
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
           <a
             href={resumeAsset.url}
             download="Gowtham_V_Resume.pdf"
-            className="inline-flex items-center gap-2 rounded-full bg-sky-400 px-6 py-3 font-semibold text-slate-900 shadow-[0_10px_40px_-10px_rgba(56,189,248,0.7)] transition-transform hover:scale-105"
+            className="inline-flex items-center gap-2 rounded-full bg-sky-400 px-6 py-3 font-semibold text-slate-900 hover:scale-105 transition-transform"
           >
-            <Download className="h-4 w-4" /> Download Resume (PDF)
+            <Download className="h-4 w-4" /> Download Resume
+          </a>
+          <a href="#contact" className="glass glass-hover inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold text-sky-300">
+            <Mail className="h-4 w-4" /> Contact Me
           </a>
         </div>
       </div>
-    </Section>
+    </section>
   );
 }
 
 function Contact() {
-  const items = [
-    { icon: <Mail className="h-5 w-5" />, label: "Email", value: "vgvgowtham585@gmail.com", href: "mailto:vgvgowtham585@gmail.com" },
-    { icon: <Phone className="h-5 w-5" />, label: "Phone", value: "Available on request", href: "mailto:vgvgowtham585@gmail.com" },
-    { icon: <Linkedin className="h-5 w-5" />, label: "LinkedIn", value: "linkedin.com/in/gowtham-v", href: "https://linkedin.com/in/gowtham-v" },
-    { icon: <Github className="h-5 w-5" />, label: "GitHub", value: "github.com/GowthamV", href: "https://github.com/GowthamV" },
-  ];
   return (
     <Section id="contact">
-      <SectionHeader eyebrow="Contact" title="Let's build something" desc="Open to internships, collaborations, and interesting problems." />
-      <div className="grid gap-6 md:grid-cols-2">
-        {items.map((c) => (
-          <a
-            key={c.label}
-            href={c.href}
-            target={c.href.startsWith("http") ? "_blank" : undefined}
-            rel="noreferrer"
-            className="glass glass-hover flex items-center gap-4 rounded-3xl p-6"
-            data-reveal
-          >
-            <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-sky-400/15 text-sky-300">{c.icon}</div>
-            <div className="min-w-0">
-              <div className="text-xs uppercase tracking-widest text-slate-400">{c.label}</div>
-              <div className="truncate font-display font-semibold text-slate-100">{c.value}</div>
-            </div>
-          </a>
-        ))}
+      <SectionHeader eyebrow="Contact" title="Let's connect" />
+      <div className="grid gap-6 md:grid-cols-2" data-reveal>
+        <a href="mailto:gowtham@example.com" className="glass glass-hover rounded-2xl p-6 flex items-center gap-4">
+          <Mail className="h-6 w-6 text-sky-300" />
+          <div>
+            <div className="font-semibold">Email</div>
+            <div className="text-sm text-slate-400">gowtham@example.com</div>
+          </div>
+        </a>
+        <a href="https://github.com/gowtham-v08" target="_blank" rel="noreferrer" className="glass glass-hover rounded-2xl p-6 flex items-center gap-4">
+          <Github className="h-6 w-6 text-sky-300" />
+          <div>
+            <div className="font-semibold">GitHub</div>
+            <div className="text-sm text-slate-400">gowtham-v08</div>
+          </div>
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="glass glass-hover rounded-2xl p-6 flex items-center gap-4">
+          <Linkedin className="h-6 w-6 text-sky-300" />
+          <div>
+            <div className="font-semibold">LinkedIn</div>
+            <div className="text-sm text-slate-400">Connect with me</div>
+          </div>
+        </a>
+        <div className="glass rounded-2xl p-6 flex items-center gap-4">
+          <Phone className="h-6 w-6 text-sky-300" />
+          <div>
+            <div className="font-semibold">Phone</div>
+            <div className="text-sm text-slate-400">Available on request</div>
+          </div>
+        </div>
       </div>
     </Section>
   );
@@ -836,20 +624,9 @@ function Contact() {
 
 function Footer() {
   return (
-    <footer className="border-t border-white/5 px-4 py-10">
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 sm:flex-row">
-        <div className="text-sm text-slate-400">© {new Date().getFullYear()} Gowtham V. Crafted with care.</div>
-        <div className="flex items-center gap-3">
-          {[
-            { icon: <Github className="h-4 w-4" />, href: "https://github.com/GowthamV" },
-            { icon: <Linkedin className="h-4 w-4" />, href: "https://linkedin.com/in/gowtham-v" },
-            { icon: <Mail className="h-4 w-4" />, href: "mailto:vgvgowtham585@gmail.com" },
-          ].map((s, i) => (
-            <a key={i} href={s.href} target="_blank" rel="noreferrer" className="glass glass-hover grid h-9 w-9 place-items-center rounded-full text-sky-300">
-              {s.icon}
-            </a>
-          ))}
-        </div>
+    <footer className="border-t border-white/5 px-4 py-10 text-center text-sm text-slate-400">
+      <div className="mx-auto max-w-6xl">
+        © {new Date().getFullYear()} Gowtham V. Built with TanStack Start + Framer Motion.
       </div>
     </footer>
   );
