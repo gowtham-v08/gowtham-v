@@ -6,9 +6,6 @@ import {
 import resumeAsset from "@/assets/resume.asset.json";
 import { motion } from "framer-motion";
 
-// Reliable profile image (GitHub avatar)
-const profileUrl = "https://avatars.githubusercontent.com/u/306114697?v=4&s=400";
-
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -166,14 +163,14 @@ function Nav({ active, scrolled }: { active: string; scrolled: boolean }) {
 
 function Hero() {
   return (
-    <section id="home" className="relative flex min-h-[90vh] items-center px-4 pt-28 pb-16">
-      <div className="mx-auto grid w-full max-w-5xl grid-cols-1 items-center gap-10 md:grid-cols-[1.1fr_0.9fr]">
+    <section id="home" className="relative flex min-h-[85vh] items-center px-4 pt-28 pb-12">
+      <div className="mx-auto grid w-full max-w-5xl grid-cols-1 items-center gap-12 md:grid-cols-[1.15fr_0.85fr]">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.55 }}
         >
-          <h1 className="font-display text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl">
+          <h1 className="font-display text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl md:text-6xl">
             Gowtham V
           </h1>
           <p className="mt-3 text-lg text-slate-300">
@@ -203,20 +200,14 @@ function Hero() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.15 }}
+          transition={{ duration: 0.65, delay: 0.1 }}
           className="relative mx-auto"
         >
-          <div className="absolute -inset-4 rounded-full bg-sky-400/20 blur-2xl" aria-hidden />
-          <div className="glass glow-ring relative overflow-hidden rounded-full p-1.5">
-            <img
-              src={profileUrl}
-              alt="Gowtham V"
-              width={400}
-              height={400}
-              className="h-64 w-64 rounded-full object-cover object-center sm:h-72 sm:w-72 md:h-80 md:w-80"
-            />
+          <div className="absolute -inset-6 rounded-full bg-sky-400/15 blur-3xl" aria-hidden />
+          <div className="glass glow-ring relative grid h-64 w-64 place-items-center rounded-full sm:h-72 sm:w-72 md:h-80 md:w-80">
+            <span className="font-display text-6xl font-bold text-sky-300/90 sm:text-7xl">GV</span>
           </div>
         </motion.div>
       </div>
@@ -234,7 +225,7 @@ function SectionHeader({ title }: { title: string }) {
 
 function Section({ id, children }: { id: string; children: React.ReactNode }) {
   return (
-    <section id={id} className="scroll-mt-24 px-4 py-16">
+    <section id={id} className="scroll-mt-24 px-4 py-14">
       <div className="mx-auto max-w-5xl">{children}</div>
     </section>
   );
