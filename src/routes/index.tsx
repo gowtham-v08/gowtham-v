@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {
   Download, Mail, Github, ArrowUp, GraduationCap, Layers,
 } from "lucide-react";
-import resumeAsset from "@/assets/resume.asset.json";
+import { RESUME_URL } from "@/assets/resume";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { PROFILE_IMAGE } from "@/lib/profile-image";
 
@@ -127,7 +127,7 @@ function Nav({ active, scrolled }: { active: string; scrolled: boolean }) {
             ))}
           </nav>
           <a
-            href={resumeAsset.url}
+            href={RESUME_URL}
             download="Gowtham_V_Resume.pdf"
             className="hidden md:inline-flex items-center gap-2 rounded-full bg-sky-400 px-4 py-1.5 text-sm font-semibold text-slate-900 transition-transform hover:scale-105"
           >
@@ -336,7 +336,7 @@ function Contact() {
           GitHub
         </a>
         <a
-          href={resumeAsset.url}
+          href={RESUME_URL}
           download="Gowtham_V_Resume.pdf"
           className="rounded-2xl bg-sky-400 px-5 py-3 flex items-center gap-3 text-sm font-semibold text-slate-900"
         >
