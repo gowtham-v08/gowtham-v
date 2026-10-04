@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 import {
   Download, Mail, Github, ArrowUp, GraduationCap, Layers,
 } from "lucide-react";
-import profileImg from "@/assets/profile.png.asset.json";
-const profileUrl = profileImg.url;
 import resumeAsset from "@/assets/resume.asset.json";
 import { motion } from "framer-motion";
+
+// Reliable profile image (GitHub avatar)
+const profileUrl = "https://avatars.githubusercontent.com/u/306114697?v=4&s=400";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -215,10 +216,6 @@ function Hero() {
               width={400}
               height={400}
               className="h-64 w-64 rounded-full object-cover object-center sm:h-72 sm:w-72 md:h-80 md:w-80"
-              onError={(e) => {
-                // fallback if Lovable asset fails
-                (e.target as HTMLImageElement).src = "https://avatars.githubusercontent.com/u/306114697?v=4";
-              }}
             />
           </div>
         </motion.div>
