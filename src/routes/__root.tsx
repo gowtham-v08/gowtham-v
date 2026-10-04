@@ -7,10 +7,9 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
   return (
@@ -37,9 +36,6 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
-  useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
-  }, [error]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -48,7 +44,10 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
         <p className="mt-2 text-sm text-muted-foreground">Something went wrong.</p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
-            onClick={() => { router.invalidate(); reset(); }}
+            onClick={() => {
+              router.invalidate();
+              reset();
+            }}
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
             Try again
@@ -64,23 +63,33 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Gowtham V — AI/ML Developer & Software Engineer" },
-      { name: "description", content: "Portfolio of Gowtham V, B.E. CSE (AI & ML) student. Python, Java, C++, Android, and Machine Learning projects." },
+      { title: "Gowtham V" },
+      {
+        name: "description",
+        content:
+          "Gowtham V — 2nd year B.E. CSE (AI & ML) student at Jeppiaar Engineering College. Python, Java, C++.",
+      },
       { name: "author", content: "Gowtham V" },
-      { property: "og:title", content: "Gowtham V — AI/ML Developer & Software Engineer" },
-      { property: "og:description", content: "Portfolio of Gowtham V, B.E. CSE (AI & ML) student. Python, Java, C++, Android, and Machine Learning projects." },
+      { property: "og:title", content: "Gowtham V" },
+      {
+        property: "og:description",
+        content:
+          "2nd year B.E. CSE (AI & ML) student. Python, Java, C++. Chennai.",
+      },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Gowtham V — AI/ML Developer & Software Engineer" },
-      { name: "twitter:description", content: "Portfolio of Gowtham V, B.E. CSE (AI & ML) student. Python, Java, C++, Android, and Machine Learning projects." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d1d113cb-e5aa-4f4b-b393-a3b8dfd542fb/id-preview-d2257e6f--1b42dae4-93d0-401d-97d9-0221d594aff7.lovable.app-1784271717021.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d1d113cb-e5aa-4f4b-b393-a3b8dfd542fb/id-preview-d2257e6f--1b42dae4-93d0-401d-97d9-0221d594aff7.lovable.app-1784271717021.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" },
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -92,8 +101,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <head><HeadContent /></head>
-      <body>{children}<Scripts /></body>
+      <head>
+        <HeadContent />
+      </head>
+      <body>
+        {children}
+        <Scripts />
+      </body>
     </html>
   );
 }
